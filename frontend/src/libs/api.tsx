@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie'
 
-
 const baseUrl = 'http://localhost:3000/api'
 
 const api = async (endPoint, options = {headers: {}}) => {

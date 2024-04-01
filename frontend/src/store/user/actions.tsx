@@ -1,5 +1,4 @@
 import * as types from './types';
-import {USER_LOGOUT_SUCCESS} from "./types";
 
 export function fetchProfileRequest() {
   return {

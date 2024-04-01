@@ -7,6 +7,7 @@ import Profile from "./Profile";
 
 function App() {
   const profile = useSelector(state => state.user.user)
+  const isLogged = profile && profile.id
 
   return (
     <ReactBs.Col xs={12}>
@@ -15,8 +16,8 @@ function App() {
           <FaHome className="me-2 large-title"/>
           <span className="ms-2 text-uppercase large-title">Funny Movies</span>
         </div>
-        {(!profile || !profile.id) && <LoginForm/>}
-        {profile && profile.id && <Profile/>}
+        {!isLogged && <LoginForm/>}
+        {isLogged && <Profile/>}
       </div>
     </ReactBs.Col>
   )

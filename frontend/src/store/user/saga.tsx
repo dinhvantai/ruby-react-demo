@@ -20,7 +20,6 @@ export function* fetchProfile() {
 }
 
 export function* createOrLogin(payload: { type: string, payload: object, formikActions: FormikHelpers<object> }) {
-  console.log({payload})
   const options = {
     method: 'POST',
     headers: {
@@ -48,8 +47,8 @@ export function* createOrLogin(payload: { type: string, payload: object, formikA
 
 
 export function* userLogout() {
-  console.log('userLogout')
   Cookies.remove('token')
+  toastHelper.success('Logout successfully!')
   yield put(actions.userLogoutSuccess())
 }
 
