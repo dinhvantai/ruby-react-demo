@@ -1,5 +1,5 @@
-import {useState} from 'react'
-import TUser from './types/TUser'
+import {useEffect} from 'react'
+import {useDispatch} from "react-redux";
 import * as ReactBs from 'react-bootstrap'
 
 import Header from "./components/Header";
@@ -7,16 +7,21 @@ import VideoList from "./components/VideoList";
 import VideoSharing from "./components/VideoSharing";
 
 import './App.scss'
+import * as videoTypes from './store/video/types'
+import * as userTypes from './store/user/types'
 
 function App() {
-  const [showVideoSharing, setShowVideoSharing] = useState<boolean>(false)
-  const onHideVideoSharing = () => setShowVideoSharing(false)
-  const onOpenVideoSharing = () => setShowVideoSharing(true)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch({type: userTypes.FETCH_PROFILE})
+    dispatch({type: videoTypes.FETCH_VIDEO})
+  }, [])
 
   return (
     <ReactBs.Container className="justify-content-between">
       <ReactBs.Row>
-        <Header onOpenVideoSharing={onOpenVideoSharing}/>
+        <Header/>
       </ReactBs.Row>
       <ReactBs.Row>
         <ReactBs.Col xs={12}>
@@ -28,8 +33,7 @@ function App() {
         <VideoList/>
       </ReactBs.Row>
 
-      <VideoSharing show={showVideoSharing} onHide={onHideVideoSharing}/>
-
+      <VideoSharing/>
     </ReactBs.Container>
   )
 }
