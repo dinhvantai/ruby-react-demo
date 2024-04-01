@@ -8,16 +8,16 @@ class Api::UsersController < ApplicationController
     if @user.nil?
       @user = User.new(user_params)
 
-      if !@user.save!
+      unless @user.save!
         return render json: { message: "Can't create user!" }, status: :unprocessable_entity
       end
     end
 
-    if !@user.authenticate(user_params[:password])
+    unless @user.authenticate(user_params[:password])
       return render json: { message: 'Wrong email or password!' }, status: :bad_request
     end
 
-    @user.token = encode_token({ user_id: @user.id })
+    @user.token = JwtHelper.encode({ user_id: @user.id })
 
     render json: @user, serializer: UserSerializer
   end

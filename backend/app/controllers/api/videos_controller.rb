@@ -4,8 +4,6 @@ class Api::VideosController < ApplicationController
   # GET /videos
   def index
     @videos = Video.includes(:user).order('id DESC').all
-    # @videos = Video.eager_load(:user).all
-
     render json: @videos, each_serializer: VideoSerializer
   end
 
