@@ -10,7 +10,7 @@ const toastOptions = {
   theme: 'light',
 }
 
-export const toastDefault = (message, options = {}) => {
+export const toastDefault = (message: string, options = {}) => {
   options = {
     ...toastOptions,
     ...options,
@@ -19,7 +19,7 @@ export const toastDefault = (message, options = {}) => {
   toast(message, options)
 }
 
-export const info = (message, options = {}) => {
+export const info = (message: string, options = {}) => {
   options = {
     ...toastOptions,
     ...options,
@@ -28,7 +28,7 @@ export const info = (message, options = {}) => {
   toast.info(message, options)
 }
 
-export const success = (message, options = {}) => {
+export const success = (message: string, options = {}) => {
   options = {
     ...toastOptions,
     ...options,
@@ -37,7 +37,7 @@ export const success = (message, options = {}) => {
   toast.success(message, options)
 }
 
-export const warning = (message, options = {}) => {
+export const warning = (message: string, options = {}) => {
   options = {
     ...toastOptions,
     ...options,
@@ -46,7 +46,7 @@ export const warning = (message, options = {}) => {
   toast.warning(message, options)
 }
 
-export const error = (message, options = {}) => {
+export const error = (message: string, options = {}) => {
   options = {
     ...toastOptions,
     ...options,

@@ -4,15 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {Formik, FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 
-
-interface IFormValue {
-  title: string;
-  full_url: string;
-  video_id?: string;
-  description: string;
-}
-
-import * as videoTypes from '../store/video/types'
+import {IState} from "../store/store.tsx";
+import {useFetchVideosQuery, useShareVideoMutation} from "../store/video/apiSlice.tsx";
+import IVideo from "../intefaces/IVideo.tsx";
+import {setVideoSharingStatus} from "../store/video/videoSlice.tsx";
+import * as toastHelper from "../libs/toast";
 
 const VideoSharingSchema = Yup.object().shape({
   title: Yup.string()
@@ -23,20 +19,39 @@ const VideoSharingSchema = Yup.object().shape({
   description: Yup.string(),
 });
 
-
 function VideoSharing() {
   const dispatch = useDispatch();
 
-  const openVideoSharing = useSelector(state => state.video.videoSharing.open)
+  const {refetch: reloadVideos} = useFetchVideosQuery()
+  const [shareVideo] = useShareVideoMutation()
 
-  const handleSubmit = (values: IFormValue, actions: FormikHelpers<IFormValue>) => {
-    const url = new URL(values.full_url)
+  const openVideoSharing = useSelector((state: IState) => state.videos.videoSharing.open)
+
+  const handleClose = () => dispatch(setVideoSharingStatus(false))
+
+  const handleSubmit = async (values: IVideo, actions: FormikHelpers<IVideo>) => {
+    const url = new URL(values.full_url || '')
     values.video_id = url.searchParams.get('v') || ''
+    if (!values.video_id) {
+      actions.setErrors({full_url: 'Please enter a correct YouTube URL!'})
+      actions.setSubmitting(false)
+      return
+    }
+    try {
+      await shareVideo(values).unwrap()
+      toastHelper.success('Shared your video successfully!')
+      handleClose()
+      actions.resetForm()
+      reloadVideos()
+    } catch {
+      toastHelper.error('Failed to share your video!')
+    } finally {
+      actions.setSubmitting(false)
+    }
 
-    dispatch({type: videoTypes.CREATE_VIDEO, payload: values, formikActions: actions})
+
   };
 
-  const handleClose = () => dispatch({type: videoTypes.CLOSE_VIDEO_SHARING})
 
   return (
     <ReactBs.Modal

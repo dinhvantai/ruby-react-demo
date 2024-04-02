@@ -1,13 +1,21 @@
 import * as ReactBs from 'react-bootstrap'
 
-import {useSelector} from "react-redux";
+import IVideo from "../intefaces/IVideo.tsx";
+import {useFetchVideosQuery} from "../store/video/apiSlice.tsx";
 
 function VideoList() {
-  const videos = useSelector(state => state.video.videos)
+  const {data: videos, isLoading} = useFetchVideosQuery()
 
   return (
     <ReactBs.Col xs={10}>
-      {videos.map((video) => (
+      {isLoading && (
+        <ReactBs.Row className="mb-3">
+          <ReactBs.Col xs={12} className="d-flex justify-content-center">
+            <ReactBs.Spinner animation="border" variant="primary"/>
+          </ReactBs.Col>
+        </ReactBs.Row>
+      )}
+      {videos?.map((video: IVideo) => (
         <ReactBs.Row className="mb-3" key={video.id}>
           <ReactBs.Col xs={4}>
             <iframe

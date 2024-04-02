@@ -1,14 +1,11 @@
 import * as ReactBs from 'react-bootstrap'
-import {useDispatch} from 'react-redux';
 import {Formik, FormikHelpers} from 'formik';
+import * as toastHelper from "../libs/toast";
 import * as Yup from 'yup';
+import Cookies from "js-cookie";
 
-import * as userTypes from "../store/user/types";
-
-interface IFormValue {
-  email: string;
-  password: string;
-}
+import {useCreateOrLoginMutation, useFetchProfileQuery} from "../store/user/apiSlice.tsx";
+import IUser from "../intefaces/IUser.tsx";
 
 const LoginFormSchema = Yup.object().shape({
   password: Yup.string()
@@ -18,11 +15,25 @@ const LoginFormSchema = Yup.object().shape({
     .required('Please enter your email!'),
 });
 
-function LoginForm() {
-  const dispatch = useDispatch();
 
-  const handleSubmit = (values: IFormValue, actions: FormikHelpers<IFormValue>) => {
-    dispatch({type: userTypes.CREATE_OR_LOGIN, payload: values, formikActions: actions})
+function LoginForm() {
+  const [createOrLogin] = useCreateOrLoginMutation()
+  const {refetch} = useFetchProfileQuery()
+
+  const handleSubmit = async (values: IUser, actions: FormikHelpers<IUser>) => {
+    try {
+      const res = await createOrLogin(values).unwrap()
+      Cookies.set('token', res.token || '')
+      refetch()
+      actions.resetForm()
+      toastHelper.success('Login successfully!')
+    } catch {
+      const message = 'Wrong email or password!';
+      actions.setErrors({email: message})
+      toastHelper.error(message)
+    } finally {
+      actions.setSubmitting(false)
+    }
   }
 
   return (
@@ -76,7 +87,7 @@ function LoginForm() {
                 isValid={touched.password && !errors.password}
                 isInvalid={touched.password && !!errors.password}
               />
-              <ReactBs.Form.Control.Feedback tooltip type="invalid">
+              <ReactBs.Form.Control.Feedback type="invalid" tooltip>
                 {errors.password}
               </ReactBs.Form.Control.Feedback>
             </ReactBs.InputGroup>

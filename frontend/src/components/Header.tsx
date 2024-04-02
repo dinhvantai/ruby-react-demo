@@ -1,13 +1,14 @@
 import * as ReactBs from 'react-bootstrap'
 import {FaHome} from 'react-icons/fa'
-import {useSelector} from 'react-redux';
 
 import LoginForm from "./LoginForm";
 import Profile from "./Profile";
+import {useFetchProfileQuery} from "../store/user/apiSlice.tsx";
 
 function App() {
-  const profile = useSelector(state => state.user.user)
-  const isLogged = profile && profile.id
+
+  const {data: profile, error} = useFetchProfileQuery()
+  const isLogged = !error && profile && profile.id
 
   return (
     <ReactBs.Col xs={12}>
