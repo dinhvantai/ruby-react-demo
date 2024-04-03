@@ -9,7 +9,7 @@ module ApplicationCable
     private
 
     def find_verified_user
-      token = cookies[:token]
+      token = @request.params['token'] || cookies['token']
 
       decoded_token = JwtHelper.decode(token)
 
