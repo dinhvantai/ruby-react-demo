@@ -1,7 +1,8 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import Cookies from 'js-cookie'
 
-const baseUrl = 'http://localhost:3000/api'
+import {getToken} from "../libs/cookies";
+
+const baseUrl = import.meta.env.VITE_API_HOST
 
 export const emptySlitApi = createApi({
   reducerPath: 'api',
@@ -9,7 +10,7 @@ export const emptySlitApi = createApi({
     // Fill in your own server starting URL here
     baseUrl,
     prepareHeaders: (headers) => {
-      const token = Cookies.get('token')
+      const token = getToken()
       token && headers.set('Authorization', `Bearer ${token}`)
 
       return headers

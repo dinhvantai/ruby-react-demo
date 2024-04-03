@@ -1,3 +1,3 @@
-export const WS_URL = 'ws://localhost:3000/cable'
+export const WS_URL = import.meta.env.VITE_WEBSOCKET_HOST
 
 export const NewVideoChannel = 'NewVideoChannel'

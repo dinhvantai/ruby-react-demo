@@ -2,13 +2,13 @@ import * as ReactBs from 'react-bootstrap'
 import {useDispatch} from 'react-redux';
 import useWebSocket, {ReadyState} from "react-use-websocket";
 import {useEffect} from "react";
-import Cookies from "js-cookie";
 
 import * as wsHelper from "../libs/ws";
 import * as toastHelper from "../libs/toast";
 import {setVideoSharingStatus} from "../store/video/videoSlice";
 import {useFetchProfileQuery} from "../store/user/apiSlice.tsx";
 import {useFetchVideosQuery} from "../store/video/apiSlice.tsx";
+import {getToken, removeToken} from "../libs/cookies";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function LoginForm() {
   const {refetch: reloadVideos} = useFetchVideosQuery()
 
   const userLogout = () => {
-    Cookies.remove('token')
+    removeToken()
     toastHelper.success('Logout successfully!')
     refetch()
   }
@@ -28,7 +28,7 @@ function LoginForm() {
     getWebSocket,
     sendJsonMessage,
     lastJsonMessage,
-  } = useWebSocket(wsHelper.WS_URL)
+  } = useWebSocket(`${wsHelper.WS_URL}?token=${getToken()}`)
 
   useEffect(() => {
     if ((!profile || !profile.id) && readyState === ReadyState.OPEN) {

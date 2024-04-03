@@ -2,10 +2,10 @@ import * as ReactBs from 'react-bootstrap'
 import {Formik, FormikHelpers} from 'formik';
 import * as toastHelper from "../libs/toast";
 import * as Yup from 'yup';
-import Cookies from "js-cookie";
 
 import {useCreateOrLoginMutation, useFetchProfileQuery} from "../store/user/apiSlice.tsx";
 import IUser from "../intefaces/IUser.tsx";
+import {setToken} from "../libs/cookies";
 
 const LoginFormSchema = Yup.object().shape({
   password: Yup.string()
@@ -23,8 +23,8 @@ function LoginForm() {
   const handleSubmit = async (values: IUser, actions: FormikHelpers<IUser>) => {
     try {
       const res = await createOrLogin(values).unwrap()
-      Cookies.set('token', res.token || '')
-      refetch()
+      setToken(res.token || '')
+      await refetch()
       actions.resetForm()
       toastHelper.success('Login successfully!')
     } catch {
