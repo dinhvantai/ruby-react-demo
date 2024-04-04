@@ -29,5 +29,11 @@ module Backend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # config/application.rb
+    env_file = File.join(Rails.root, 'config', 'local_env.yml')
+
+    YAML.load_file(env_file).each do |key, value|
+      ENV[key.to_s] = value
+    end if File.exist?(env_file)
   end
 end

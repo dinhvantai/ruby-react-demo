@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type {PayloadAction} from '@reduxjs/toolkit'
 
 
 export interface IVideoState {
@@ -18,7 +18,7 @@ const videosSlice = createSlice({
   name: 'videos',
   initialState,
   reducers: {
-    setVideoSharingStatus(state, action: { payload: PayloadAction<boolean> }) {
+    setVideoSharingStatus(state, action: PayloadAction<boolean>) {
       state.videoSharing.open = action.payload
     },
   }
