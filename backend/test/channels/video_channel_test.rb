@@ -16,7 +16,7 @@ class VideoChannelTest < ActionCable::Channel::TestCase
 
   test "should stream for NewVideoChannel when create a video" do
     assert_broadcasts "NewVideoChannel", 1 do
-      Video.create(@video)
+       Video.create(title: @video.title, full_url: @video.full_url, video_id: @video.video_id, user_id: users(:one).id)
     end
   end
 end
