@@ -12,13 +12,16 @@ function App() {
 
   return (
     <ReactBs.Col xs={12}>
-      <div className="pt-3 d-flex align-items-center">
-        <div className="d-flex align-items-center">
+      <div className="pt-3 row align-items-center">
+        <div className="col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-start">
           <FaHome className="me-2 large-title"/>
           <span className="ms-2 text-uppercase large-title">Funny Movies</span>
         </div>
-        {!isLogged && <LoginForm/>}
-        {isLogged && <Profile/>}
+        <div className="col-12 col-lg-8 d-flex align-items-center mt-lg-0 mt-3">
+          {!isLogged && <LoginForm/>}
+          {isLogged && <Profile/>}
+        </div>
+
       </div>
     </ReactBs.Col>
   )

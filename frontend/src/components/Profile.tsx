@@ -61,22 +61,29 @@ function LoginForm() {
   }, [lastJsonMessage])
 
   return (
-    <div className="flex-grow-1 justify-content-end d-flex align-items-center">
-      <span>Welcome, <strong>{profile?.email}</strong></span>
-      <ReactBs.Button
-        variant="primary" type="button"
-        onClick={onOpenVideoSharing} className="ms-3"
-      >
-        Share a movie
-      </ReactBs.Button>
-      <ReactBs.Button
-        variant="danger"
-        type="button"
-        className="ms-3"
-        onClick={userLogout}
-      >
-        Logout
-      </ReactBs.Button>
+    <div className="flex-grow-1 row align-items-center">
+      <div className="col-12 d-flex align-items-center justify-content-end flex-column flex-lg-row">
+        <div className="me-lg-5">Welcome, <strong>{profile?.email}</strong></div>
+        <div className="row col-12 col-lg">
+          <ReactBs.Button
+            className="col-12 col-lg mt-2 mt-lg-0"
+            variant="primary" type="button"
+            onClick={onOpenVideoSharing}
+          >
+            Share a movie
+          </ReactBs.Button>
+          <ReactBs.Button
+            className="col-12 col-lg mt-2 mt-lg-0 ms-lg-3"
+            variant="danger"
+            type="button"
+            onClick={userLogout}
+          >
+            Logout
+          </ReactBs.Button>
+        </div>
+
+      </div>
+
     </div>
   )
 }

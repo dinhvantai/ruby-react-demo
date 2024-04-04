@@ -7,7 +7,7 @@ function VideoList() {
   const {data: videos, isLoading} = useFetchVideosQuery()
 
   return (
-    <ReactBs.Col xs={10}>
+    <ReactBs.Col xs={12} lg={10}>
       {isLoading && (
         <ReactBs.Row className="mb-3">
           <ReactBs.Col xs={12} className="d-flex justify-content-center">

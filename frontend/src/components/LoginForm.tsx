@@ -56,9 +56,9 @@ function LoginForm() {
           noValidate
           onReset={handleReset}
           onSubmit={handleSubmit}
-          className="flex-grow-1 justify-content-end d-flex"
+          className="flex-grow-1 justify-content-end row flex-column flex-md-row align-items-center"
         >
-          <ReactBs.Form.Group className="me-3">
+          <ReactBs.Form.Group className="me-0 col-12 col-md-6 col-lg-4">
             <ReactBs.InputGroup hasValidation>
               <ReactBs.Form.Control
                 type="email"
@@ -75,7 +75,7 @@ function LoginForm() {
               </ReactBs.Form.Control.Feedback>
             </ReactBs.InputGroup>
           </ReactBs.Form.Group>
-          <ReactBs.Form.Group className="me-3">
+          <ReactBs.Form.Group className="mt-3 mt-md-0 me-0 col-12 col-md-6 col-lg-4">
             <ReactBs.InputGroup hasValidation>
               <ReactBs.Form.Control
                 type="password"
@@ -92,9 +92,16 @@ function LoginForm() {
               </ReactBs.Form.Control.Feedback>
             </ReactBs.InputGroup>
           </ReactBs.Form.Group>
-          <ReactBs.Button variant="primary" type="submit" disabled={isSubmitting}>
-            Login / Register
-          </ReactBs.Button>
+          <ReactBs.Form.Group className="col-12 mt-3 mt-lg-0 col-lg-4">
+            <ReactBs.Button
+              className="w-100"
+              variant="primary"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Login / Register
+            </ReactBs.Button>
+          </ReactBs.Form.Group>
         </ReactBs.Form>
       )}
     </Formik>
