@@ -13,13 +13,13 @@ This project has been configured with Docker, allowing you to quickly utilize it
 - Git: https://git-scm.com/downloads
 - Docker: https://docs.docker.com/engine/install/
 - Docker Compose: https://docs.docker.com/compose/install/
-
-The following tools will assist you during the development process:
-
-- Ruby 3.3.0: https://www.ruby-lang.org/en/downloads/
-- Rails > 7.1.0: https://rubyonrails.org/
 - Node.js >= 19.0.0: https://nodejs.org/en/download/
 - Yarn : https://classic.yarnpkg.com/en/docs/install/
+
+The following tools will assist you during the development process:
+- Ruby 3.3.0: https://www.ruby-lang.org/en/downloads/
+- Rails > 7.1.0: https://rubyonrails.org/
+
 
 ## Installation & Configuration
 
@@ -33,6 +33,8 @@ The following tools will assist you during the development process:
    ```docker compose build``` or ```docker-compose build```
 5. Run the Docker containers:
    ```docker compose up -d``` or ```docker-compose up -d```
+6. Install and run frontend:
+   ```cd frontend && yarn && yarn dev```
 
 ## Database Setup
 
@@ -41,7 +43,7 @@ All necessary tables have been generated during the Docker execution process.
 ## Running the Application
 
 - Go to explore browser and open the following URL:
-  ```http://localhost:3000```
+  ```http://localhost:8000```
 
 - Run the following command to execute test cases:
   ```docker exec -it api ./bin/rails test```
